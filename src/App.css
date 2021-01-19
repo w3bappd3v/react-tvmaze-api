@@ -35,34 +35,6 @@ input {
   margin-right: 10px;
 }
 
-button {
-  height: 36px;
-  border: none;
-  border-radius: 6px;
-  background: #213250;
-  padding: 0 20px;
-  outline-color: #fff;
-  color: white;
-}
-
-.show {
-  background: #f2f3f8;
-  padding: 20px;
-  margin: 130px 0;
-  height: 220px;
-  position: relative;
-}
-
-.show img {
-  position: absolute;
-  top: -17px;
-  left: 20px
-}
-
-ul.show-info {
-  list-style: none;
-  margin: 0 0 0 203px;
-}
 
 h1 {
   margin: 0;

@@ -1,7 +1,8 @@
 import { Component } from 'react';
 import './App.css';
 
-import { Show } from './components/Show.js';
+import Show from './components/Show.js';
+import Button from './components/Button.js';
 import { ShowDetails } from './components/ShowDetails.js';
 
 class App extends Component {
@@ -12,7 +13,19 @@ class App extends Component {
       shows: [],
       searchStr: '',
       showDetails: false,
-      show: {}
+      show: {},
+      timeoutId: 0,
+      btnText: 'Search'
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.searchStr !== prevState.searchStr) {
+      clearTimeout(this.state.timeoutId);
+      const timeoutId = setTimeout(() => {
+          this.search();
+      }, 500);
+      this.setState({timeoutId: timeoutId});
     }
   }
 
@@ -21,11 +34,13 @@ class App extends Component {
   }
 
   search () {
+    this.setState({ btnText: 'Loading...'});
     this.setState({ showDetails: false });
     fetch("http://api.tvmaze.com/search/shows?q=" + this.state.searchStr).then(response => {
       return response.json();
     }).then(data => {
       this.setState({ shows: data });
+      this.setState({ btnText: 'Search'});
     });
   }
 
@@ -41,19 +56,16 @@ class App extends Component {
   render () {
     return (
       <div className="app">
-        <div class="header">Show Finder</div>
-        <div class="content">
-          <div class="search-control-row">
+        <div className="header">Show Finder</div>
+        <div className="content">
+          <div className="search-control-row">
             <input type="text" onChange={ this.updateSearchStr.bind(this) } />
-            <button onClick={ this.search.bind(this) }>Search</button>
+            <Button onClick={ this.search.bind(this) } btnType={'primary'} btnText={this.state.btnText}></Button>
           </div>
           {
             this.state.showDetails
             ? (
-              <p>
-                <ShowDetails 
-                    name={ this.state.show.name } />
-              </p>
+              <ShowDetails name={ this.state.show.name } />
             )
             : (
               <div className="shows">
