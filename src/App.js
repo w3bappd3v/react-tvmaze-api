@@ -1,9 +1,8 @@
 import { Component } from 'react';
-import './App.css';
+import './App.scss';
 
-import Show from './components/Show.js';
-import Button from './components/Button.js';
-import { ShowDetails } from './components/ShowDetails.js';
+import Show from './components/show/Show.js';
+import { ShowDetails } from './components/showDetail/ShowDetail.js';
 
 class App extends Component {
 
@@ -15,7 +14,7 @@ class App extends Component {
       showDetails: false,
       show: {},
       timeoutId: 0,
-      btnText: 'Search'
+      loading: false
     }
   }
 
@@ -34,17 +33,19 @@ class App extends Component {
   }
 
   search () {
-    this.setState({ btnText: 'Loading...'});
+    this.setState({ shows: []});
+    this.setState({ loading: true});
     this.setState({ showDetails: false });
     fetch("http://api.tvmaze.com/search/shows?q=" + this.state.searchStr).then(response => {
       return response.json();
     }).then(data => {
       this.setState({ shows: data });
-      this.setState({ btnText: 'Search'});
+      this.setState({ loading: false});
     });
   }
 
   goToShow (showId) {
+    this.setState({ show: {} })
     this.setState({ showDetails: true });
     fetch("http://api.tvmaze.com/shows/" + showId).then(response => {
       return response.json();
@@ -59,16 +60,18 @@ class App extends Component {
         <div className="header">Show Finder</div>
         <div className="content">
           <div className="search-control-row">
-            <input type="text" onChange={ this.updateSearchStr.bind(this) } />
-            <Button onClick={ this.search.bind(this) } btnType={'primary'} btnText={this.state.btnText}></Button>
+            <label className="search-label" htmlFor="search">Find Shows: </label><input id="search" type="text" onChange={ this.updateSearchStr.bind(this) } />
+            { this.state.loading ? ('loading') : ''}
           </div>
           {
             this.state.showDetails
             ? (
-              <ShowDetails name={ this.state.show.name } />
+              <div key="details">
+                <ShowDetails name={ this.state.show.name } />
+              </div>
             )
             : (
-              <div className="shows">
+              <div className="shows" key="shows">
               {this.state.shows.map(show => {
                 if(show.show.image) {
                   return <Show goToShow={ this.goToShow.bind(this) } 
@@ -94,5 +97,4 @@ class App extends Component {
   }
 
 }
-
 export default App;
