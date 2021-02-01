@@ -1,0 +1,46 @@
+.header {
+  padding: 10px;
+  color: white;
+  background: #213250;
+}
+
+.content {
+  color: #333333;
+  height: fit-content;
+  min-height: 100vh;
+  margin: 0 auto;
+  max-width: 1200px;
+  border-top: none;
+  border-bottom: none;
+  min-width: 307px;
+  padding: 20px;
+  background: #fff;
+}
+
+.search-control-row {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  border-radius: 3px;
+  border: 1px solid #d4d4d4;
+  background: #f2f3f8;
+  height: 25px;
+  width: 200px;
+  font-size: 1.15em;
+  padding: 5px;
+  vertical-align: middle;
+  color: #585858;
+  margin-right: 10px;
+}
+
+
+h1 {
+  margin: 0;
+}
+
+.search-label {
+  font-size: 1.25em;
+  margin: 5px;
+}

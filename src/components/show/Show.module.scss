@@ -1,0 +1,24 @@
+.show {
+  background: #f2f3f8;
+  padding: 20px;
+  margin: 65px 0;
+  height: 220px;
+  position: relative;
+}
+
+.show img {
+  position: absolute;
+  top: -17px;
+  left: 20px
+}
+
+ul.info {
+  list-style: none;
+  margin: 0 0 0 203px;
+}
+
+.summary {
+  max-height: 130px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
